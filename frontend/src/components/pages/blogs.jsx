@@ -9,10 +9,8 @@ const Blog = () => {
   console.log("categoryBlogs: ", categoryBlogs);
 
   const categories = [
-    { name: "All", count: 12 },
     { name: "Fashion", count: 4 },
     { name: "Business", count: 3 },
-    // { name: "Health", count: 2 },
     { name: "Travel", count: 1 },
     { name: "Food", count: 2 },
   ];
@@ -28,7 +26,7 @@ const Blog = () => {
       })
       .catch((err) => {
         console.log("Error while fetching blogs");
-      });
+      }); 
   }, [categoryBlogs]);
 
   return (
@@ -50,12 +48,13 @@ const Blog = () => {
                   </h3>
                   <nav className="space-y-2">
                     {categories.map((category) => (
-                      <button
+                      <Link
+                        to={`/${category.name}`}
                         key={category.name}
                         className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors text-gray-600 hover:bg-gray-50`}
                       >
                         <span>{category.name}</span>
-                      </button>
+                      </Link>
                     ))}
                   </nav>
                 </div>

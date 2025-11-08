@@ -1,35 +1,43 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { HeartIcon, ShareIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
+  HeartIcon,
+  ShareIcon,
+  ArrowLeftIcon,
+} from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 const Detail = () => {
-  const { categoryBlogs, blogId } = useParams();
-  const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [comments, setComments] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const { categoryBlogs, blogId } = useParams();
+  const navigate = useNavigate();
+  console.log("category: ", categoryBlogs);
+  console.log("blog_id: ", blogId);
+
+  let content = ""; // generate fifty random string
+  for (let i = 0; i < 50; i++) {
+    content += Math.random().toString(36).substring(2, 7);
+  }
+  let longDiscription = `<p class="mb-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt, omnis laudantium facere aliquid fugiat praesentium consectetur ab architecto molestiae quod rerum sed expedita ullam! Minima reiciendis exercitationem necessitatibus iusto reprehenderit.</p>
+                 <p class="mb-4">The process of achieving perfection in product design is iterative and never-ending. It requires a deep understanding of user needs, technical constraints, and business objectives. Designers must constantly balance these competing demands while maintaining their creative vision.</p>
+                 <h2 class="text-xl font-semibold mb-3 mt-6">The Role of Blog Research</h2>
+                <p class="mb-4">${content}</p>`;
 
   useEffect(() => {
-    const blogData = {
-      id: 1,
-      title: "A Relentless Pursuit of Perfection in Product Design",
-      content: `
-                <p class="mb-4">It begins to notice that there was a sharp contrast between well-made designs and how they impacted the overall user experience. The journey to perfection in product design is not just about aesthetics, but about creating meaningful interactions that resonate with users.</p>
-                <p class="mb-4">The process of achieving perfection in product design is iterative and never-ending. It requires a deep understanding of user needs, technical constraints, and business objectives. Designers must constantly balance these competing demands while maintaining their creative vision.</p>
-                <h2 class="text-xl font-semibold mb-3 mt-6">The Role of User Research</h2>
-                <p class="mb-4">User research plays a crucial role in informing design decisions. Through careful observation and analysis, designers can identify pain points and opportunities for improvement. This data-driven approach helps ensure that design choices are grounded in real user needs rather than assumptions.</p>
-            `,
-      author: "Phoenix Baker",
-      authorRole: "Senior Product Designer",
-      authorImage:
-        "https://res.cloudinary.com/dgcqtwfbj/image/upload/v1756797702/portrait-4599553_1280_z8vzik.jpg",
-      date: "19 Jan 2024",
-      imageUrl:
-        "https://res.cloudinary.com/dgcqtwfbj/image/upload/v1756797702/portrait-4599553_1280_z8vzik.jpg",
-      readTime: "5 min read",
-    };
-    setBlog(blogData);
+    axios({
+      method: "GET",
+      url: `http://localhost:1111/blogs/oneBlog?category=${categoryBlogs}&&blog_id=${blogId}`,
+    })
+      .then((res) => {
+        console.log(`one ${categoryBlogs} Blog \n`, res.data.data);
+        setBlog(res.data.data);
+      })
+      .catch((err) => {
+        console.log("Error while fetching one blog");
+      });
 
     // Simulated comments
     const commentsData = [
@@ -53,7 +61,7 @@ const Detail = () => {
       },
     ];
     setComments(commentsData);
-  }, [id]);
+  }, []);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -82,14 +90,14 @@ const Detail = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <img
-                  src={blog.authorImage}
+                  src={blog.imageUrl}
                   alt={blog.author}
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
                   <h3 className="font-medium text-gray-900">{blog.author}</h3>
                   <div className="text-sm text-gray-500">
-                    <span>{blog.date}</span>
+                    <span>{blog.date.split("T")[0]}</span>
                     <span className="mx-2">•</span>
                     <span>{blog.readTime}</span>
                   </div>
@@ -124,8 +132,8 @@ const Detail = () => {
 
           {/* Content */}
           <div
-            className="prose prose-lg max-w-none mb-12"
-            dangerouslySetInnerHTML={{ __html: blog.content }}
+            className="prose prose-lg max-w-none mb-12 break-words"
+            dangerouslySetInnerHTML={{ __html: longDiscription }}
           />
 
           {/* Comments Section */}

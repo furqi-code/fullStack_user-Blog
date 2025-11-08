@@ -39,10 +39,6 @@ const routes = createBrowserRouter([
         element: <Detail />,
       },
       {
-        path: "/detail",
-        element: <Detail />,
-      },
-      {
         path: "/account/profile",
         element: <Profile />,
       },

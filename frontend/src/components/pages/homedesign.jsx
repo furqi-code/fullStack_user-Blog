@@ -2,26 +2,32 @@ import { useState, useEffect } from "react";
 import FeaturedArticle from "../shared/featuredArticle";
 import LatestArticle from "../shared/latestArticle";
 import axios from "axios";
+import { Link } from "react-router";
 
 const HomeDesign = () => {
   const [blogs, setBlogs] = useState([]);
   const [mainFeatured, setMainFeatured] = useState(null);
-  let randomIndex = Math.floor(Math.random()*27) // total blogs: 28
+  let randomIndex = Math.floor(Math.random() * 27); // total blogs: 28
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:1111/blogs?category=blogs`,
+      url: `http://localhost:1111/blogs?category=all`,
     })
       .then((res) => {
         console.log(`All Blogs \n`, res.data.data);
         setBlogs(res.data.data);
-        setMainFeatured(res.data.data[randomIndex]);   // blogs[randomIndex] won't work bcz immediate re-render doesn't happen 
       })
       .catch((err) => {
         console.log("Error while fetching blogs");
       });
   }, []);
+
+  useEffect(() => {
+    if (blogs.length > 0) {
+      setMainFeatured(blogs[randomIndex]);
+    }
+  }, [blogs]);
 
   return (
     <>
@@ -44,7 +50,7 @@ const HomeDesign = () => {
                   />
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                  <span>{mainFeatured.date.split('T')[0]}</span>
+                  <span>{mainFeatured.date.split("T")[0]}</span>
                   <span className="text-gray-300">•</span>
                   <span>{mainFeatured.author}</span>
                 </div>
@@ -58,8 +64,14 @@ const HomeDesign = () => {
             )}
             {/* Right side - few smaller articles */}
             <div className="space-y-6">
-              {blogs.slice(randomIndex, randomIndex+4).map((blog) => (
-                <FeaturedArticle key={blog.id} blog={blog} />
+              {blogs.slice(randomIndex, randomIndex + 4).map((blog) => (
+                <Link
+                  to={`/blogs/${blog.blog_id}`}
+                  key={blog.id}
+                  className="block mb-6"
+                >
+                  <FeaturedArticle key={blog.id} blog={blog} />
+                </Link>
               ))}
             </div>
           </div>
@@ -76,7 +88,9 @@ const HomeDesign = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Latest section (show last 5) */}
             {blogs.slice(-5).map((blog) => (
-              <LatestArticle key={blog.id} blog={blog} />
+              <Link to={`/blogs/${blog.blog_id}`} key={blog.id}>
+                <LatestArticle key={blog.id} blog={blog} />
+              </Link>
             ))}
           </div>
         </div>
