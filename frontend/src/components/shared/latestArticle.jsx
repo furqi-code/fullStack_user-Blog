@@ -9,14 +9,14 @@ const LatestArticle = ({blog}) => {
         />
       </div>
       <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-        <span>{blog.date}</span>
+        <span>{blog.date.split('T')[0]}</span>
         <span className="text-gray-300">•</span>
         <span>{blog.author}</span>
       </div>
       <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-gray-600 line-clamp-2">
         {blog.title}
       </h3>
-      <p className="text-gray-600 mb-4 line-clamp-2">{blog.discription}</p>
+      <p className="text-gray-600 mb-4 line-clamp-2">{blog.description}</p>
     </article>
   );
 };

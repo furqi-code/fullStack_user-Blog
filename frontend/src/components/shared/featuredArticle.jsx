@@ -12,7 +12,7 @@ const FeaturedArticle = ({blog}) => {
       </div>
       <div className="flex-grow">
         <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-          <span>{blog.date}</span>
+          <span>{blog.date.split('T')[0]}</span>
           <span className="text-gray-300">•</span>
           <span>{blog.author}</span>
         </div>

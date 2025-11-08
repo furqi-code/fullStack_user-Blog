@@ -19,28 +19,20 @@ const Header = () => {
 
           <nav className="hidden md:flex space-x-6">
             <NavLink to="/blogs" className="text-gray-900 hover:text-gray-600">
+              All
+            </NavLink>
+            <NavLink to="/Fashion" className="text-gray-900 hover:text-gray-600">
               Fashion
             </NavLink>
-
-            <NavLink to="/blogs" className="text-gray-900 hover:text-gray-600">
+            <NavLink to="/Travel" className="text-gray-900 hover:text-gray-600">
               Travel
             </NavLink>
-
-            <NavLink to="/blogs" className="text-gray-900 hover:text-gray-600">
-              Education
-            </NavLink>
-
-            <NavLink to="/blogs" className="text-gray-900 hover:text-gray-600">
-              Technology
-            </NavLink>
-
-            <NavLink to="/blogs" className="text-gray-900 hover:text-gray-600">
+            <NavLink to="/Business" className="text-gray-900 hover:text-gray-600">
               Business
             </NavLink>
-
-            <NavLink to="/blogs" className="text-gray-900 hover:text-gray-600">
-              Entertainment
-            </NavLink>
+            <NavLink to="/Food" className="text-gray-900 hover:text-gray-600">
+              Food
+            </NavLink>  
           </nav>
 
           <div className="hidden md:flex space-x-4">

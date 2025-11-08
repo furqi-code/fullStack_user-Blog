@@ -4,7 +4,7 @@ import { HeartIcon, ShareIcon, ArrowLeftIcon } from "@heroicons/react/24/outline
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 
 const Detail = () => {
-  const { id } = useParams();
+  const { categoryBlogs, blogId } = useParams();
   const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [comments, setComments] = useState([]);

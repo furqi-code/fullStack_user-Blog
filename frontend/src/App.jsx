@@ -5,7 +5,7 @@ import Home from "./components/pages/home";
 import HomeDesign from "./components/pages/homedesign";
 import Login from "./components/pages/login";
 import Register from "./components/pages/register";
-import Blog from "./components/pages/blog";
+import Blog from "./components/pages/blogs";
 import Detail from "./components/pages/cardDetails";
 import Profile from "./components/account/profile";
 import MyBlogs from "./components/account/myBlogs";
@@ -31,8 +31,12 @@ const routes = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/blogs",
+        path: "/:categoryBlogs",
         element: <Blog />,
+      },
+      {
+        path: "/:categoryBlogs/:blogId",
+        element: <Detail />,
       },
       {
         path: "/detail",

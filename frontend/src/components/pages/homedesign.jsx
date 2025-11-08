@@ -1,171 +1,88 @@
-import { useState, useEffect } from 'react'
-import FeaturedArticle from '../shared/featuredArticle';
-import LatestArticle from '../shared/latestArticle';
+import { useState, useEffect } from "react";
+import FeaturedArticle from "../shared/featuredArticle";
+import LatestArticle from "../shared/latestArticle";
+import axios from "axios";
 
 const HomeDesign = () => {
-    const [featuredBlogs, setFeaturedBlogs] = useState([]);
-    const [mainFeatured, setMainFeatured] = useState(null);
-    const [latestBlogs, setLatestBlogs] = useState([]);
+  const [blogs, setBlogs] = useState([]);
+  const [mainFeatured, setMainFeatured] = useState(null);
+  let randomIndex = Math.floor(Math.random()*27) // total blogs: 28
 
-    // Temporary featured blogs data (replace with API call later)
-    useEffect(() => {
-        const featuredBlogsArray = [
-            {
-                id: 1,
-                title: "A Relentless Pursuit of Perfection in Product Design",
-                discription: "It begins to notice that there was a sharp contrast between well-made designs and how they impacted the overall user experience. The journey to perfection in product design is not just about aesthetics, but about creating meaningful interactions that resonate with users.",
-                author: "Phoenix Baker",
-                date: "19 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/v1756797702/portrait-4599553_1280_z8vzik.jpg",
-            },
-            {
-                id: 2,
-                title: "How to Run a Successful Business With Your Partner",
-                discription: "Starting a business with your spouse or significant other is an exciting but challenging venture...",
-                author: "Lana Steiner",
-                date: "18 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797851/portrait-787522_1280_p6fluq.jpg",
-            },
-            {
-                id: 3,
-                title: "Why Food Matters — Disease Prevention & Treatment",
-                discription: "Eating more plants and less meat has been tied to a longer life and a reduced risk of...",
-                author: "Lana Steiner",
-                date: "18 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797702/portrait-4599553_1280_z8vzik.jpg",
-            },
-            {
-                id: 4,
-                title: "Conversations with London Makr & Co.",
-                discription: "We sat down with London's fast-growing brand and product design studio, Makr & Co. to find out how they've used...",
-                author: "Olivia Rhye",
-                date: "20 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797987/butterfly-9791233_1280_ys6yeg.jpg",
-            },
-            {
-                id: 5,
-                title: "Conversations with London Makr & Co.",
-                discription: "We sat down with London's fast-growing brand and product design studio, Makr & Co. to find out how they've used...",
-                author: "Olivia Rhye",
-                date: "20 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756575047/cld-sample-4.jpg",
-            }
-            
-        ];
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `http://localhost:1111/blogs?category=blogs`,
+    })
+      .then((res) => {
+        console.log(`All Blogs \n`, res.data.data);
+        setBlogs(res.data.data);
+        setMainFeatured(res.data.data[randomIndex]);   // blogs[randomIndex] won't work bcz immediate re-render doesn't happen 
+      })
+      .catch((err) => {
+        console.log("Error while fetching blogs");
+      });
+  }, []);
 
-        const latestBlogsArray = [
-            {
-                id: 1,
-                title: "A Relentless Pursuit of Perfection in Product Design",
-                discription: "It begins to notice that there was a sharp contrast between well-made designs and how they impacted the overall user experience. The journey to perfection in product design is not just about aesthetics, but about creating meaningful interactions that resonate with users.",
-                author: "Phoenix Baker",
-                date: "19 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/v1756797702/portrait-4599553_1280_z8vzik.jpg",
-            },
-            {
-                id: 2,
-                title: "How to Run a Successful Business With Your Partner",
-                discription: "Starting a business with your spouse or significant other is an exciting but challenging venture...",
-                author: "Lana Steiner",
-                date: "18 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797851/portrait-787522_1280_p6fluq.jpg",
-            },
-            {
-                id: 3,
-                title: "Why Food Matters — Disease Prevention & Treatment",
-                discription: "Eating more plants and less meat has been tied to a longer life and a reduced risk of...",
-                author: "Lana Steiner",
-                date: "18 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797702/portrait-4599553_1280_z8vzik.jpg",
-            },
-            {
-                id: 4,
-                title: "Conversations with London Makr & Co.",
-                discription: "We sat down with London's fast-growing brand and product design studio, Makr & Co. to find out how they've used...",
-                author: "Olivia Rhye",
-                date: "20 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797987/butterfly-9791233_1280_ys6yeg.jpg",
-            },
-            {
-                id: 5,
-                title: "Conversations with London Makr & Co.",
-                discription: "We sat down with London's fast-growing brand and product design studio, Makr & Co. to find out how they've used...",
-                author: "Olivia Rhye",
-                date: "20 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756575047/cld-sample-4.jpg",
-            },
-            {
-                id: 6,
-                title: "Conversations with London Makr & Co.",
-                discription: "We sat down with London's fast-growing brand and product design studio, Makr & Co. to find out how they've used...",
-                author: "Olivia Rhye",
-                date: "20 Jan 2024",
-                imageUrl: "https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756575047/cld-sample-4.jpg",
-            }
-            
-        ];
-
-        setMainFeatured(featuredBlogsArray[0]);
-        setFeaturedBlogs(featuredBlogsArray.slice(1));
-        setLatestBlogs(latestBlogsArray)
-    }, []);
-
-    return (
-        <>
-            <section className="featured-blogs py-12 ">
-                <div className="container mx-auto px-4 max-w-[1440px]">
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900">Featured Articles</h2>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Left side - Main featured article */}
-                        {mainFeatured && (
-                            <article className="group cursor-pointer">
-                                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl mb-6">
-                                    <img 
-                                        src={mainFeatured.imageUrl}
-                                        alt={mainFeatured.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                                    <span>{mainFeatured.date}</span>
-                                    <span className="text-gray-300">•</span>
-                                    <span>{mainFeatured.author}</span>
-                                </div>
-                                <h3 className="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600">
-                                    {mainFeatured.title}
-                                </h3>
-                                <p className="text-gray-600 mb-4 line-clamp-3">
-                                    {mainFeatured.discription}
-                                </p>
-                            </article>
-                        )}
-
-                        {/* Right side - 4 smaller articles */}
-                        <div className="space-y-6">
-                            {featuredBlogs.map(blog => (
-                                <FeaturedArticle blog={blog}></FeaturedArticle>
-                            ))}
-                        </div>
-                    </div>
+  return (
+    <>
+      <section className="featured-blogs py-12 ">
+        <div className="container mx-auto px-4 max-w-[1440px]">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900">
+              Featured Articles
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left side - Main featured article */}
+            {mainFeatured && (
+              <article className="group cursor-pointer">
+                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl mb-6">
+                  <img
+                    src={mainFeatured.imageUrl}
+                    alt={mainFeatured.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-            </section>
-
-            <section className="latest-blogs bg-light py-12">
-                <div className="container mx-auto px-4 max-w-[1440px]">
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900">Latest Articles</h2>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {latestBlogs.map(blog => (
-                            <LatestArticle blog={blog}></LatestArticle>
-                        ))}
-                    </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                  <span>{mainFeatured.date.split('T')[0]}</span>
+                  <span className="text-gray-300">•</span>
+                  <span>{mainFeatured.author}</span>
                 </div>
-            </section>
-        </>
-    )
-}
+                <h3 className="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600">
+                  {mainFeatured.title}
+                </h3>
+                <p className="text-gray-600 mb-4 line-clamp-3">
+                  {mainFeatured.discription}
+                </p>
+              </article>
+            )}
+            {/* Right side - few smaller articles */}
+            <div className="space-y-6">
+              {blogs.slice(randomIndex, randomIndex+4).map((blog) => (
+                <FeaturedArticle key={blog.id} blog={blog} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-export default HomeDesign
+      <section className="latest-blogs bg-light py-12">
+        <div className="container mx-auto px-4 max-w-[1440px]">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900">
+              Latest Articles
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Latest section (show last 5) */}
+            {blogs.slice(-5).map((blog) => (
+              <LatestArticle key={blog.id} blog={blog} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default HomeDesign;
