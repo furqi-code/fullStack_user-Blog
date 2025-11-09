@@ -4,9 +4,14 @@ import {
   HeartIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import { BlogContext } from "../../store/blogContext";
 
 const Sidebar = () => {
+  const { setIsloggedin } = useContext(BlogContext);
+  const navigate = useNavigate()
+
   const tabs = [
     {
       id: "profile",
@@ -63,7 +68,9 @@ const Sidebar = () => {
         <div className="pt-4 mt-6 border-t border-gray-200">
           <button
             onClick={() => {
-              console.log("Logout clicked");
+              localStorage.removeItem("userDetail");
+              setIsloggedin(false);
+              navigate("/");
             }}
             className="w-full flex items-center space-x-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
           >

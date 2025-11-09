@@ -1,47 +1,10 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router";
 import axios from "axios";
 
 export function ForgotPassDialog({ showforgotPassDialog }) {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const emailRef = useRef();
   const newPasswordRef = useRef();
   const confirmPasswordRef = useRef();
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    const email = emailRef.current.value;
-    const newPassword = newPasswordRef.current.value;
-    const confirmPassword = confirmPasswordRef.current.value;
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    axios({
-      method: "PATCH",
-      url: "http://localhost:1111/forgotPassword",
-      data: {
-        email,
-        newPassword,
-        confirmPassword,
-      },
-    })
-      .then((res) => {
-        setSuccess("Password reset successful. Redirecting to login...");
-        setTimeout(() => {
-          showforgotPassDialog(false);
-          showSigninDialog(true);
-        }, 2000);
-      })
-      .catch((err) => {
-        setError(err.response?.data?.message || "Something went wrong");
-      });
-  };
 
   return (
     <>
@@ -113,6 +76,13 @@ export function ForgotPassDialog({ showforgotPassDialog }) {
                   className="w-full rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
                 >
                   Save 
+                </button>
+                <button
+                  type="button"
+                  className="mt-2 w-full rounded-md bg-red-300 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-red-700 focus:shadow-none active:bg-red-700 hover:bg-red-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer mb-2"
+                  onClick={() => showforgotPassDialog(false)}
+                >
+                  Cancel
                 </button>
                 <p className="flex justify-center mt-6 text-sm text-slate-600">
                   Remember your password?

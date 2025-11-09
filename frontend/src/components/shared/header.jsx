@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router";
+import { BlogContext } from "../../store/blogContext";
 // import { token } from "./Config";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const {isLoggedin, setIsloggedin} = useContext(BlogContext);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -21,33 +23,62 @@ const Header = () => {
             <NavLink to="/all" className="text-gray-900 hover:text-gray-600">
               All
             </NavLink>
-            <NavLink to="/Fashion" className="text-gray-900 hover:text-gray-600">
+            <NavLink
+              to="/Fashion"
+              className="text-gray-900 hover:text-gray-600"
+            >
               Fashion
             </NavLink>
             <NavLink to="/Travel" className="text-gray-900 hover:text-gray-600">
               Travel
             </NavLink>
-            <NavLink to="/Business" className="text-gray-900 hover:text-gray-600">
+            <NavLink
+              to="/Business"
+              className="text-gray-900 hover:text-gray-600"
+            >
               Business
             </NavLink>
             <NavLink to="/Food" className="text-gray-900 hover:text-gray-600">
               Food
-            </NavLink>  
+            </NavLink>
           </nav>
 
           <div className="hidden md:flex space-x-4">
-            <Link
-              to="/login"
-              className="px-4 py-2 border border-primary-color text-primary-color rounded-md hover:bg-primary-color hover:text-white transition"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="px-4 py-2 bg-primary-color hover:bg-secondary-color rounded-md transition"
-            >
-              Register
-            </Link>
+            {isLoggedin === false ? (
+              <>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 border border-primary-color text-primary-color rounded-md hover:bg-primary-color hover:text-white transition"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 bg-primary-color hover:bg-secondary-color rounded-md transition"
+                >
+                  Register
+                </Link>{" "}
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/account/profile"
+                  className="px-4 py-2 border border-primary-color text-primary-color rounded-md hover:bg-primary-color hover:text-white transition"
+                >
+                  Account
+                </Link>
+                <Link
+                  to='/'
+                  className="px-4 py-2 bg-primary-color hover:bg-secondary-color rounded-md transition"
+                  onClick={() => {
+                    localStorage.removeItem('userDetail');
+                    setIsloggedin(false);
+                  }}
+                >
+                  Logout
+                </Link>{" "}
+              </>
+            )}
           </div>
 
           <button

@@ -1,44 +1,51 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useRef, useContext } from "react";
+import { Link, useNavigate } from "react-router";
 import { ForgotPassDialog } from "./forgotPassworDialog";
+import axios from "axios";
 
 const Login = () => {
   const [forgotPassDialog, showforgotPassDialog] = useState(false);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const navigate = useNavigate();
 
   return (
     <>
-      {/* this btn inside login diagnol */}
       {forgotPassDialog && (
         <ForgotPassDialog showforgotPassDialog={showforgotPassDialog} />
       )}
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label
                 className="block text-sm font-medium text-gray-600 mb-2"
-                htmlFor=""
+                htmlFor="email"
               >
                 Email
               </label>
               <input
+                id="email"
                 placeholder="Enter Email"
                 type="text"
-                className={`focus:outline-none w-full border border-gray-200 py-2 px-4 rounded-lg`}
+                ref={emailRef}
+                className="focus:outline-none w-full border border-gray-200 py-2 px-4 rounded-lg"
               />
             </div>
             <div>
               <label
                 className="block text-sm font-medium text-gray-600 mb-2"
-                htmlFor=""
+                htmlFor="password"
               >
                 Password
               </label>
               <input
+                id="password"
                 placeholder="Enter Password"
                 type="password"
-                className={`focus:outline-none w-full border mt-1 border-gray-200 py-2 px-4 rounded-lg`}
+                ref={passwordRef}
+                className="focus:outline-none w-full border mt-1 border-gray-200 py-2 px-4 rounded-lg"
               />
             </div>
             <div className="inline-flex justify-between items-center mt-2">
@@ -75,15 +82,26 @@ const Login = () => {
                 </label>
               </label>
               <p
-                onClick={() => {
-                  showforgotPassDialog(true);
-                }}
-                className="text-sm text-blue-600 underline cursor-pointer mt-2"
+                onClick={() => showforgotPassDialog(true)}
+                className="text-sm text-blue-600 underline cursor-pointer mt-2 ml-34"
               >
                 Forgot Password?
               </p>
             </div>
-            <button className="focus:outline-none w-full text-white bg-primary-color py-2 px-4 rounded-lg hover:bg-secondary-color transition">
+
+            {error && (
+              <p className="text-red-500 text-sm mt-2 font-semibold">{error}</p>
+            )}
+            {success && (
+              <p className="text-green-500 text-sm mt-2 font-semibold">
+                {success}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="focus:outline-none w-full bg-primary-color py-2 px-4 rounded-lg hover:bg-secondary-color transition"
+            >
               Login
             </button>
           </form>

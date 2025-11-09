@@ -13,14 +13,14 @@ app.use(
   })
 );
 
-// const register = require("./router/register");
-// const login = require("./router/login");
-// const forgot = require("./router/forgotPassword");
+const register = require("./router/register");
+const login = require("./router/login");
+const forgot = require("./router/forgotPassword");
 const blogs = require("./router/blogs");
 
-// app.use('/register', register);
-// app.use('/login', login);
-// app.use("/forgotPassword", forgot);
+app.use('/register', register);
+app.use('/login', login);
+app.use("/forgotPassword", forgot);
 app.use('/blogs', blogs);
 
 app.listen(PORT, function () {

@@ -1,13 +1,16 @@
+import { BlogContextProvider } from "../../store/blogContext";
+import { Outlet } from "react-router";
 import Header from "../shared/header";
 import Footer from "../shared/footer";
-import { Outlet } from "react-router";
 
 const Home = () => {
   return (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      <BlogContextProvider>
+        <Header />
+        <Outlet />
+        <Footer />
+      </BlogContextProvider>
     </>
   );
 };
