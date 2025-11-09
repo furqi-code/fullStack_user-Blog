@@ -4,12 +4,14 @@ import {
   HeartIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
-import { useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { BlogContext } from "../../store/blogContext";
+import axios from "axios";
 
 const Sidebar = () => {
   const { setIsloggedin } = useContext(BlogContext);
+  const [username, setUsername] = useState("");
   const navigate = useNavigate()
 
   const tabs = [
@@ -39,6 +41,24 @@ const Sidebar = () => {
     },
   ];
 
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:1111/account/profile",
+      headers: {
+        Authorization: localStorage.getItem("userDetail"),
+      },
+    })
+      .then((res) => {
+        const { username } = res.data.info;
+        setUsername(username);
+      })
+      .catch((err) => {
+        console.log("Couldn't fetch user profile", err);
+        setError("Failed to load profile data.");
+      });
+  }, []);
+
   return (
     <aside className="md:w-64 flex-shrink-0">
       <div className="bg-white shadow rounded-lg p-6">
@@ -49,7 +69,7 @@ const Sidebar = () => {
             className="w-12 h-12 rounded-full"
           />
           <div>
-            <h2 className="text-lg font-medium text-gray-900">Eva</h2>
+            <h2 className="text-lg font-medium text-gray-900">{username}</h2>
             <p className="text-sm text-gray-500">View Profile</p>
           </div>
         </div>

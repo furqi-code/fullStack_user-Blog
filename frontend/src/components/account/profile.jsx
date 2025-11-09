@@ -21,8 +21,8 @@ const Profile = () => {
     })
       .then((res) => {
         const { Email, username, Bio, location } = res.data.info;
-        if (emailRef.current) emailRef.current.value = Email || "";
-        if (usernameRef.current) usernameRef.current.value = username || "";
+        if (emailRef.current) emailRef.current.value = Email;
+        if (usernameRef.current) usernameRef.current.value = username;
         if (bioRef.current) bioRef.current.value = Bio || "";
         if (locationRef.current) locationRef.current.value = location || "";
       })
@@ -72,7 +72,7 @@ const Profile = () => {
         <div className="container mx-auto px-4 max-w-[1440px]">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Sidebar */}
-            <Sidebar />
+            <Sidebar/>
 
             {/* Main Content */}
             <main className="flex-1">
