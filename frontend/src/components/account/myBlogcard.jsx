@@ -1,6 +1,24 @@
 import axios from "axios";
 
 const MyblogCard = ({ setMyBlogs, blog }) => {
+  const deleteMyBlog = () => {
+    axios({
+      method: "DELETE",
+      url: `http://localhost:1111/account/myBlogs/deleteBlog?blog_id=${blog.blog_id}`,
+      headers: {
+        Authorization: localStorage.getItem("userDetail"),
+      },
+    })
+      .then((res) => {
+        // window.location.reload();
+        setMyBlogs((prevBlogs) =>
+          prevBlogs.filter((b) => b.blog_id !== blog.blog_id)
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching favouriteList:", error);
+      });
+  };
 
   return (
     <>
@@ -47,7 +65,7 @@ const MyblogCard = ({ setMyBlogs, blog }) => {
             </button>
             <button
               className="text-red-600 hover:text-red-700 text-sm font-medium inline-flex items-center"
-            //   onClick={deleteMyBlog}
+                onClick={deleteMyBlog}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

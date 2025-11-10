@@ -61,4 +61,19 @@ router.post("/addBlog", async (req, res) => {
   }
 });
 
+router.delete("/deleteBlog", async (req, res) => {
+  try {
+    const user_id = req.user_id;
+    const blog_id = req.query.blog_id;
+    await executeQuery(`DELETE from blogs WHERE user_id = ? AND blog_id = ?`, [user_id, blog_id]);
+    res.status(200).send("Blog deleted from db");
+  } catch (err) {
+    console.error("Error deleting your blogs:", err);
+    res.status(500).send({
+      message: "Something went wrong",
+      error: err.message,
+    });
+  }
+});
+
 module.exports = router;
