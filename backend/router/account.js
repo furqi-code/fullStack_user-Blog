@@ -136,5 +136,20 @@ router.post("/favourites", async (req, res) => {
   }
 });
 
+router.delete("/favourites", async (req, res) => {
+  try {
+    const user_id = req.user_id;
+    const blog_id = req.query.blog_id;
+    await executeQuery(
+      `delete from favouritelist where user_id = ? AND blog_id = ?`,
+      [user_id, blog_id]
+    );
+    return res.status(200).send(`This Blog deleted from the list`);
+  } catch (err) {
+    res.status(500).send({
+      message: "Something went wrong",
+    });
+  }
+});
 
 module.exports = router;

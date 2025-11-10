@@ -1,6 +1,10 @@
 import { HeartIcon } from "@heroicons/react/24/solid";
+import { BlogContext } from "../../store/blogContext";
+import { useContext } from "react";
 
 const FavouriteArticles = ({ blog }) => {
+  const { removeFavourite } = useContext(BlogContext);
+
   return (
     <article className="group cursor-pointer">
       <div className="relative aspect-[16/10] overflow-hidden rounded-xl mb-4">
@@ -13,7 +17,7 @@ const FavouriteArticles = ({ blog }) => {
           className="absolute top-4 right-4 p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors"
           onClick={(e) => {
             e.preventDefault();
-            // add remove blog logic here
+            removeFavourite(blog.blog_id)
           }}
         >
           <HeartIcon className="w-5 h-5 text-red-500" />

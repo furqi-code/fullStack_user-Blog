@@ -6,6 +6,7 @@ export const BlogContext = createContext({
   isLoggedin: undefined,
   setIsloggedin: () => {},
   addtoFavourite: () => {},
+  removeFavourite: () => {},
   getFavouritelist: () => {},
 });
 
@@ -85,6 +86,27 @@ export const BlogContextProvider = ({ children }) => {
     }
   };
 
+  const removeFavourite = async (blog_id) => {
+    try {
+      if(state.isLoggedin){
+
+        await axios({
+          method: "DELETE",
+          url: `http://localhost:1111/account/favourites?blog_id=${blog_id}`,
+          headers: {
+            Authorization: localStorage.getItem("userDetail"),
+          },
+        });
+        getFavouritelist();
+      }else{
+        alert("Kindly login to remove from your Favourite list");
+      }
+    } catch (err) {
+      console.error("Couldn't delete this blog from favourite list", err);
+    }
+  };
+
+
   return (
     <BlogContext
       value={{
@@ -92,6 +114,7 @@ export const BlogContextProvider = ({ children }) => {
         isLoggedin: state.isLoggedin,
         setIsloggedin,
         addtoFavourite: collectBlogs,
+        removeFavourite,  
         getFavouritelist,
       }}
     >
