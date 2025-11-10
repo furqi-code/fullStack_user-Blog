@@ -28,9 +28,9 @@ const Sidebar = () => {
       icon: DocumentTextIcon,
     },
     {
-      id: "favorites",
+      id: "favourites",
       url: "/account/favourite-blogs",
-      name: "Favorites",
+      name: "Favourites",
       icon: HeartIcon,
     },
     {
@@ -64,7 +64,7 @@ const Sidebar = () => {
       <div className="bg-white shadow rounded-lg p-6">
         <div className="flex items-center space-x-4 mb-6">
           <img
-            src="https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797851/portrait-787522_1280_p6fluq.jpg"
+            src="https://st2.depositphotos.com/1537427/5859/v/950/depositphotos_58597527-stock-illustration-female-user-icon.jpg"
             alt="profile pic"
             className="w-12 h-12 rounded-full"
           />

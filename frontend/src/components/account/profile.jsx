@@ -85,7 +85,7 @@ const Profile = () => {
                     <div className="md:w-1/3">
                       <div className="aspect-square w-full max-w-[200px] mx-auto relative">
                         <img
-                          src="https://res.cloudinary.com/dgcqtwfbj/image/upload/w_450/v1756797851/portrait-787522_1280_p6fluq.jpg"
+                          src="https://st2.depositphotos.com/1537427/5859/v/950/depositphotos_58597527-stock-illustration-female-user-icon.jpg"
                           alt="Profile pic"
                           className="rounded-full w-full h-full object-cover"
                         />

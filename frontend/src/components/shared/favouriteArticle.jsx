@@ -28,7 +28,7 @@ const FavouriteArticles = ({ blog }) => {
         <span className="text-gray-300">•</span>
         <span>{blog.author}</span>
         <span className="text-gray-300">•</span>
-        <span>{blog.readTime}</span>
+        <span>{blog.readTime} min</span>
       </div>
       <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-gray-600">
         {blog.title}

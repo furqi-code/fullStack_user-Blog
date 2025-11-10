@@ -12,6 +12,7 @@ const login = require("./router/login");
 const forgot = require("./router/forgotPassword");
 const blogs = require("./router/blogs");
 const account = require('./router/account');
+const myBlogCrud = require('./router/myBlogCrud');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ app.use('/login', login);
 app.use("/forgotPassword", forgot);
 app.use('/blogs', blogs);
 app.use('/account', account);
+app.use('/account/myBlogs', myBlogCrud);
 
 
 app.listen(PORT, function () {
