@@ -142,6 +142,11 @@ router.post('/comment', async (req, res) => {
     const commented_at = new Date().toISOString().split('T')[0];
     const post_comment = await executeQuery(`insert into comments(user_id, blog_id, content, commented_at) 
       values(?,?,?,?)`, [user_id, blog_id, content, commented_at])
+    // if(post_comment.insertId > 0){
+    //   res.status(200).send(`Comment posted under blog_id ${blog_id}`);
+    // }else{
+    //   res.status().send(`Comment can't be posted under blog_id ${blog_id}`);
+    // }
     const comments = await executeQuery(`select u.username, u.profile_pic, c.comment_id, c.content, c.commented_at
       from comments c inner join users u 
       on c.user_id = u.user_id
@@ -151,11 +156,21 @@ router.post('/comment', async (req, res) => {
     }else{
       res.status(401).send({message: "no comment available for this blog"});
     }
-    // if(post_comment.insertId > 0){
-    //   res.status(200).send(`Comment posted under blog_id ${blog_id}`);
-    // }else{
-    //   res.status().send(`Comment can't be posted under blog_id ${blog_id}`);
-    // }
+  }catch(err){
+    res.status(500).send({
+      message: "Something went wrong"
+    })
+  }
+})
+
+router.delete('/comment/eliminate', async (req, res) => {
+  try{
+    const user_id = req.user_id;
+    const blog_id = req.query.blog_id;
+    const comment_id = req.query.comment_id;
+    await executeQuery(`DELETE from comments WHERE user_id = ? AND blog_id = ? AND comment_id = ?`, 
+      [user_id, blog_id, comment_id]);
+    res.status(200).send(`comment deleted from under blog_id ${blog_id}`);
   }catch(err){
     res.status(500).send({
       message: "Something went wrong"

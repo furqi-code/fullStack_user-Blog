@@ -51,28 +51,6 @@ const Detail = () => {
         console.log("Error while fetching one blog");
       });
 
-    // Simulated comments
-    // const commentsData = [
-    //   {
-    //     id: 1,
-    //     author: "Sarah Miller",
-    //     authorImage:
-    //       "https://res.cloudinary.com/dgcqtwfbj/image/upload/v1756797851/portrait-787522_1280_p6fluq.jpg",
-    //     content:
-    //       "This is a great article! The insights about user research are particularly valuable.",
-    //     date: "2 hours ago",
-    //   },
-    //   {
-    //     id: 2,
-    //     author: "James Wilson",
-    //     authorImage:
-    //       "https://res.cloudinary.com/dgcqtwfbj/image/upload/v1756797987/butterfly-9791233_1280_ys6yeg.jpg",
-    //     content:
-    //       "I appreciate how you broke down the design process. Very insightful!",
-    //     date: "5 hours ago",
-    //   },
-    // ];
-
     axios({
       method: "GET",
       url: `http://localhost:1111/account/comment?blog_id=${blogId}`,
@@ -113,6 +91,23 @@ const Detail = () => {
     } else {
       alert("Kindly login to add a comment under this blog");
     }
+  };
+
+  const deleteMyComment = (comment_id) => {
+    axios({
+      method: "DELETE",
+      url: `http://localhost:1111/account/comment/eliminate?comment_id=${comment_id}&&blog_id=${blogId}`,
+      headers: {
+        Authorization: localStorage.getItem("userDetail"),
+      },
+    })
+      .then((res) => {
+        // could have run the select query in Api to get the fresh comments for this blog
+        setComments((prevComments) => prevComments.filter((comment) => comment.comment_id !== comment_id));
+      })
+      .catch((err) => {
+        console.log("Error while deleting a comment");
+      });
   };
 
   if (!blog) return null;
@@ -219,6 +214,7 @@ const Detail = () => {
               {comments.map((comment) => (
                 <CommentCard
                   comment={comment}
+                  deleteMyComment={deleteMyComment}
                 ></CommentCard>
               ))}
             </div>
