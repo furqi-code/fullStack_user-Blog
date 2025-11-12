@@ -39,6 +39,9 @@ const Header = () => {
             >
               Business
             </NavLink>
+            <NavLink to="/Health" className="text-gray-900 hover:text-gray-600">
+              Health
+            </NavLink>
             <NavLink to="/Food" className="text-gray-900 hover:text-gray-600">
               Food
             </NavLink>

@@ -41,7 +41,7 @@ const HomeDesign = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left side - Main featured article */}
             {mainFeatured && (
-              <article className="group cursor-pointer">
+              <article>
                 <div className="relative aspect-[16/10] overflow-hidden rounded-2xl mb-6">
                   <img
                     src={mainFeatured.imageUrl}
@@ -58,7 +58,11 @@ const HomeDesign = () => {
                   {mainFeatured.title}
                 </h3>
                 <p className="text-gray-600 mb-4 line-clamp-3">
-                  {mainFeatured.description}
+                  {mainFeatured.description} Lorem ipsum, dolor sit amet
+                  consectetur adipisicing elit. Quo praesentium voluptates
+                  veritatis fuga porro placeat consequuntur natus deleniti
+                  tempore labore. Iusto eaque veniam, eligendi distinctio rem
+                  corrupti temporibus aliquam necessitatibus!
                 </p>
               </article>
             )}

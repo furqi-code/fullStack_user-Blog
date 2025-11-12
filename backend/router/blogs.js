@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     }
 
     if (blogs.length === 0) {
-      return res.status(404).send({ message: "No blogs found" });
+      return res.status(200).send({ data: [] });
     }
     res.status(200).send({ data: blogs });
   } catch (err) {
