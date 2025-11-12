@@ -1,5 +1,7 @@
 import { useReducer, createContext } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const BlogContext = createContext({
   favouriteList: [],
@@ -90,7 +92,7 @@ export const BlogContextProvider = ({ children }) => {
         });
         getFavouritelist();
       } else {
-        alert("Kindly login to add in your Favourite list");
+        toast.error("Kindly login to add in your Favourite list");
       }
     } catch (err) {
       console.error("Error adding blog to favourites", err);
@@ -109,7 +111,7 @@ export const BlogContextProvider = ({ children }) => {
         });
         getFavouritelist();
       } else {
-        alert("Kindly login to remove from your Favourite list");
+        toast.error("Kindly login to remove from your Favourite list");
       }
     } catch (err) {
       console.error("Couldn't delete this blog from favourite list", err);

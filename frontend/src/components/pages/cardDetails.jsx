@@ -9,10 +9,10 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
+import { ToastContainer, toast } from "react-toastify";
 
 const Detail = () => {
-  const { addtoFavourite, getFavouritelist, favouriteList, isLoggedin } =
-    useContext(BlogContext);
+  const { addtoFavourite, getFavouritelist, favouriteList, isLoggedin } = useContext(BlogContext);
   const [blog, setBlog] = useState(null);
   const [comments, setComments] = useState([]);
   const commentRef = useRef();
@@ -70,7 +70,7 @@ const Detail = () => {
     e.preventDefault();
     if (isLoggedin) {
       const content = commentRef.current.value;
-      if(!content) return alert("Please fill up the comment box");
+      if(!content) return toast.warning("Please fill up the comment box");
       axios({
         method: "POST",
         url: `http://localhost:1111/account/comment/add?blog_id=${blogId}`,
@@ -89,7 +89,7 @@ const Detail = () => {
         });
       commentRef.current.value = "";
     } else {
-      alert("Kindly login to add a comment under this blog");
+      toast.error("Kindly login to add a comment under this blog");
     }
   };
 
@@ -152,9 +152,7 @@ const Detail = () => {
                   onClick={async () => {
                     if (!alreadyinList) await addtoFavourite(blogId);
                     else
-                      alert(
-                        "this Blog already available in your favoutire list"
-                      );
+                      toast.info("this Blog already available in your Favourite list");
                   }}
                 >
                   {!alreadyinList ? (
@@ -221,6 +219,7 @@ const Detail = () => {
           </section>
         </div>
       </article>
+      <ToastContainer position="bottom-left" />  
     </>
   );
 };
