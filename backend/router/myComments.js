@@ -44,14 +44,15 @@ router.post('/add', async (req, res) => {
     const user_id = req.user_id;
     const blog_id = req.query.blog_id;
     const { content } = req.body;
-    const commented_at = new Date().toISOString().split('T')[0];
-    const post_comment = await executeQuery(`insert into comments(user_id, blog_id, content, commented_at) 
-      values(?,?,?,?)`, [user_id, blog_id, content, commented_at])
+    const post_comment = await executeQuery(`insert into comments(user_id, blog_id, content) 
+      values(?,?,?)`, [user_id, blog_id, content])
     // if(post_comment.insertId > 0){
     //   res.status(200).send(`Comment posted under blog_id ${blog_id}`);
     // }else{
     //   res.status().send(`Comment can't be posted under blog_id ${blog_id}`);
     // }
+//  fetch all comments for this blog post and send them back so the client can immediately update ui 
+//  without needing a separate refresh or additional request
     const comments = await executeQuery(`select u.username, u.profile_pic, c.comment_id, c.content, c.commented_at
       from comments c inner join users u 
       on c.user_id = u.user_id

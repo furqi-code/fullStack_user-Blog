@@ -8,7 +8,7 @@ Router.post("/", async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const profile_pic = "https://st2.depositphotos.com/1537427/5859/v/950/depositphotos_58597527-stock-illustration-female-user-icon.jpg"
-    const created_at = new Date().toISOString().split('T')[0];
+    // const created_at = new Date().toISOString().split('T')[0];
     if (!username || !email || !password) {
       return res.status(409).send("Incomplete credentials");
     }
@@ -21,8 +21,8 @@ Router.post("/", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, SALTROUND);
     const insertedUser = await executeQuery(
-      `INSERT INTO users(username, email, password, profile_pic, created_at) VALUES (?, ?, ?, ?, ?)`,
-      [username, email, hashedPassword, profile_pic, created_at]
+      `INSERT INTO users(username, email, password, profile_pic) VALUES (?, ?, ?, ?)`,
+      [username, email, hashedPassword, profile_pic]
     );
 
     if (insertedUser.insertId > 0) {

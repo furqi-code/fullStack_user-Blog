@@ -9,7 +9,7 @@ create table users(
   Bio TEXT,
   location varchar(255),
   profile_pic TEXT,
-  created_at DATE
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE blogs(
@@ -29,8 +29,8 @@ CREATE TABLE comments(
   user_id INT NOT NULL,
   blog_id INT NOT NULL,
   comment_id INT PRIMARY KEY AUTO_INCREMENT,
-  content TEXT NOT NULL,
-  commented_at DATE,
+  content TEXT,
+  commented_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (blog_id) REFERENCES blogs(blog_id) ON DELETE CASCADE
 );
@@ -73,7 +73,7 @@ INSERT INTO blogs (user_id, title, description, date, readTime, category, author
 (NULL, 'Sushi: Art on a Plate', 'Learn about sushi making and its cultural significance, alongside tips for appreciating this Japanese culinary art.', '2025-11-18', 6, 'Food', 'Aaron White', 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&auto=format&fit=max'),
 (NULL, 'Delicious Fish Dishes', 'Top recipes and cooking tips for fish lovers, focusing on fresh ingredients and flavorful preparations.', '2025-11-19', 4, 'Food', 'Bella Young', 'https://ik.imagekit.io/munchery/blog/tr:w-768/5-exquisite-mediterranean-recipes-for-barbecuing-whole-fish.jpeg');
 
-select * from users;
+select * from users;	
 select * from blogs;	
 select * from favouritelist;	
 select * from comments;
